@@ -1,7 +1,6 @@
-import { ShoppingItem } from "@prisma/client";
+import { type ShoppingItem } from "@prisma/client";
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import ItemModal from "~/components/ItemModal";
 
@@ -11,11 +10,9 @@ const Home: NextPage = () => {
   const [items, setItems] = useState<ShoppingItem[]>([]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const {} = api.items.greeting.useMutation({
-    onSuccess: (item) => {
-      setItems((prev) => [...prev, item]);
-    },
-  });
+  const { data: itemsData, isLoading } = api.items.getAllItems.useQuery();
+
+  if (!itemsData || isLoading) return <p>Loading...</p>;
 
   return (
     <>
@@ -37,7 +34,7 @@ const Home: NextPage = () => {
           </button>
         </div>
         <ul className="mt-4">
-          {items.map((item) => (
+          {itemsData.map((item) => (
             <li key={item.id}>
               <span>{item.name}</span>
             </li>

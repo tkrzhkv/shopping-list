@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { type Dispatch, type FC, type SetStateAction, useState } from "react";
 import { api } from "~/utils/api";
 
 interface ItemModalProps {
@@ -8,7 +8,7 @@ interface ItemModalProps {
 const ItemModal: FC<ItemModalProps> = ({ setModalOpen }) => {
   const [input, setInput] = useState<string>("");
 
-  const { mutate: addItem } = api.items.greeting.useMutation();
+  const { mutate: addItem } = api.items.addItem.useMutation();
 
   return (
     <div className=" absolute inset-0 flex items-center justify-center bg-gray-600 bg-opacity-40">
